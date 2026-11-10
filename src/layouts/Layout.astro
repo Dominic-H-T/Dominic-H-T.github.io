@@ -1,0 +1,37 @@
+---
+// Layout.astro
+import HeaderHUD from '../components/HeaderHUD.astro';
+import FooterStatus from '../components/FooterStatus.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "DOMINIC HATCHER-THOMASSEN // Terminal Portfolio",
+  description = "Cybersecurity engineer, systems developer, and creative screenwriter & film producer." 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between selection:bg-cyber-cyan selection:text-black">
+    <div>
+      <HeaderHUD />
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-16">
+        <slot />
+      </main>
+    </div>
+    <FooterStatus />
+  </body>
+</html>

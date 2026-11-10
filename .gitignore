@@ -1,0 +1,13 @@
+# Build & dependencies
+dist/
+node_modules/
+.astro/
+
+# Environment files
+.env
+.env.production
+
+# OS generated
+.DS_Store
+Thumbs.db
+npm-debug.log*

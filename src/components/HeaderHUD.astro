@@ -1,0 +1,76 @@
+---
+// HeaderHUD.astro
+---
+
+<header class="w-full border-b border-cyber-border bg-cyber-carbon/90 backdrop-blur-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-4">
+    <!-- Terminal ID & Node -->
+    <div class="flex items-center space-x-3">
+      <div class="w-3 h-3 bg-cyber-green rounded-full animate-pulse shadow-glow-green"></div>
+      <div>
+        <div class="font-mono text-xs text-cyber-cyan tracking-wider flex items-center gap-2">
+          <span class="font-bold">DOMINIC HATCHER-THOMASSEN</span>
+          <span class="text-cyber-textMuted">// ID: DHT-2028</span>
+        </div>
+        <div class="font-mono text-[11px] text-cyber-textMuted">
+          NODE: <span class="text-cyber-textMain">SPU_WEST_CAMPUS</span> &bull; CLEARANCE: <span class="text-cyber-yellow">RESEARCH_FELLOW</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telemetry & Controls -->
+    <div class="flex items-center gap-3 font-mono text-xs">
+      <!-- Live Status Badge -->
+      <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-cyber-panel border border-cyber-border text-cyber-textMain chamfer-sm">
+        <span class="text-cyber-green font-bold">[SYS: ONLINE]</span>
+        <span class="text-cyber-textMuted text-[10px]" id="live-clock">UTC 00:00:00</span>
+      </div>
+
+      <!-- CRT FX Toggle -->
+      <button 
+        id="crt-toggle-btn"
+        class="px-2.5 py-1 bg-cyber-panel border border-cyber-cyan/50 text-cyber-cyan hover:bg-cyber-cyan/10 hover:shadow-glow-cyan transition-all chamfer-sm text-[11px]"
+        title="Toggle Retro CRT Scanline Filter"
+      >
+        [CRT FX: <span id="crt-status">ON</span>]
+      </button>
+
+      <!-- Graduation Countdown Tag -->
+      <div class="hidden md:block px-2.5 py-1 bg-cyber-panel border border-cyber-yellow/40 text-cyber-yellow text-[11px] chamfer-sm">
+        [TARGET: GRAD_SPRING_2028]
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Real-time UTC clock
+  function updateClock() {
+    const clockEl = document.getElementById('live-clock');
+    if (clockEl) {
+      const now = new Date();
+      clockEl.textContent = `UTC ${now.toUTCString().split(' ')[4]}`;
+    }
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // CRT FX Toggle
+  const toggleBtn = document.getElementById('crt-toggle-btn');
+  const statusEl = document.getElementById('crt-status');
+  const body = document.body;
+
+  let crtActive = true;
+  body.classList.add('crt-overlay');
+
+  toggleBtn?.addEventListener('click', () => {
+    crtActive = !crtActive;
+    if (crtActive) {
+      body.classList.add('crt-overlay');
+      if (statusEl) statusEl.textContent = 'ON';
+    } else {
+      body.classList.remove('crt-overlay');
+      if (statusEl) statusEl.textContent = 'OFF';
+    }
+  });
+</script>

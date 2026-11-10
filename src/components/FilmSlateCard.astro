@@ -1,0 +1,98 @@
+---
+// FilmSlateCard.astro
+interface Props {
+  title: string;
+  logline: string;
+  role: string;
+  runtime: string;
+  format: string;
+  date: string;
+  festivalLaurels?: string[];
+  trailerUrl?: string;
+  screenplayUrl?: string;
+  status: string;
+  featured?: boolean;
+}
+
+const { title, logline, role, runtime, format, date, festivalLaurels, trailerUrl, screenplayUrl, status, featured } = Astro.props;
+---
+
+<article 
+  data-category="film" 
+  class="portfolio-card relative bg-cyber-panel border border-cyber-border hover:border-cyber-magenta transition-all duration-300 p-6 chamfer-md group flex flex-col justify-between hover:shadow-glow-magenta"
+>
+  <div>
+    <!-- Slate Header -->
+    <div class="flex items-center justify-between font-mono text-[11px] text-cyber-textMuted border-b border-cyber-border/70 pb-3 mb-4">
+      <div class="flex items-center gap-2">
+        <span class="text-cyber-magenta font-bold">&gt; SLATE_REEL:</span>
+        <span class="text-cyber-textMain">{format} &bull; {runtime}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        {featured && (
+          <span class="px-2 py-0.5 bg-cyber-magenta/15 text-cyber-magenta border border-cyber-magenta/40 text-[10px] chamfer-sm font-bold">
+            [FEATURED_REEL]
+          </span>
+        )}
+        <span class="text-cyber-magenta">[{status.toUpperCase()}]</span>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-xl font-bold font-mono text-cyber-textMain group-hover:text-cyber-magenta transition-colors mb-2">
+      {title}
+    </h3>
+
+    <!-- Role Badge -->
+    <div class="inline-block font-mono text-xs text-cyber-magenta px-2.5 py-1 bg-cyber-magenta/10 border border-cyber-magenta/30 chamfer-sm mb-3">
+      ROLE: <span class="font-bold">{role}</span>
+    </div>
+
+    <!-- Logline -->
+    <p class="text-cyber-textMuted text-sm leading-relaxed italic mb-4">
+      "{logline}"
+    </p>
+
+    <!-- Festival Laurels -->
+    {festivalLaurels && festivalLaurels.length > 0 && (
+      <div class="mb-5">
+        <div class="font-mono text-[10px] text-cyber-pink tracking-wider mb-1.5">// FESTIVAL ACCREDITATION:</div>
+        <div class="space-y-1">
+          {festivalLaurels.map(laurel => (
+            <div class="font-mono text-xs text-cyber-textMain flex items-center gap-2">
+              <span class="text-cyber-magenta">&diams;</span>
+              <span>{laurel}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Action Links Footer -->
+  <div class="pt-4 border-t border-cyber-border/60 flex items-center justify-between font-mono text-xs">
+    <span class="text-cyber-textMuted text-[11px]">{date}</span>
+    <div class="flex items-center gap-3">
+      {trailerUrl && (
+        <a 
+          href={trailerUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-cyber-magenta hover:text-white transition-colors flex items-center gap-1 hover:underline font-mono text-xs"
+        >
+          <span>[WATCH_FILM &nearr;]</span>
+        </a>
+      )}
+      {screenplayUrl && (
+        <a 
+          href={screenplayUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-cyber-cyan hover:text-white transition-colors flex items-center gap-1 hover:underline"
+        >
+          <span>[READ_SCRIPT &nearr;]</span>
+        </a>
+      )}
+    </div>
+  </div>
+</article>

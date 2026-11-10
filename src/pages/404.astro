@@ -1,0 +1,24 @@
+---
+// 404.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 // NODE NOT FOUND">
+  <div class="py-24 text-center font-mono">
+    <div class="inline-block p-8 bg-cyber-panel border border-cyber-magenta chamfer-lg max-w-lg shadow-glow-magenta">
+      <div class="text-cyber-magenta text-5xl font-black mb-4">404</div>
+      <div class="text-cyber-yellow text-sm font-bold tracking-wider mb-2">
+        // ACCESS_ERROR: NODE_UNREACHABLE
+      </div>
+      <p class="text-cyber-textMuted text-xs mb-6 leading-relaxed">
+        The requested transmission packet could not be routed. The sector may be classified or offline.
+      </p>
+      <a 
+        href="/" 
+        class="inline-block px-6 py-2.5 bg-cyber-carbon border border-cyber-cyan text-cyber-cyan hover:bg-cyber-cyan/15 hover:shadow-glow-cyan transition-all text-xs font-bold chamfer-sm"
+      >
+        &lt;&lt; RETURN_TO_ROOT_TERMINAL
+      </a>
+    </div>
+  </div>
+</Layout>

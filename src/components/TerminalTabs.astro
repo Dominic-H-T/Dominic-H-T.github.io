@@ -1,0 +1,95 @@
+---
+// TerminalTabs.astro
+---
+
+<div class="w-full my-8">
+  <div class="flex items-center justify-between border-b border-cyber-border pb-3 mb-6">
+    <div class="font-mono text-xs text-cyber-cyan tracking-wider flex items-center gap-2">
+      <span class="text-cyber-magenta">&gt;</span> DIRECTORY_NAV // ACCESS_PORTFOLIO_MODULES
+    </div>
+    <div class="font-mono text-[11px] text-cyber-textMuted hidden sm:block">
+      FILTER_MODE: <span id="active-filter-label" class="text-cyber-cyan font-bold">ALL_ENTRIES</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+    <!-- Tab 0: All -->
+    <button 
+      data-filter="all"
+      class="nav-tab active px-4 py-3 bg-cyber-panel border border-cyber-cyan text-cyber-cyan shadow-glow-cyan chamfer-sm text-left transition-all"
+    >
+      <div class="text-[10px] text-cyber-textMuted">// INDEX</div>
+      <div class="font-bold text-sm">00_ALL_ARCHIVES</div>
+    </button>
+
+    <!-- Tab 1: Systems & Cyber -->
+    <button 
+      data-filter="tech"
+      class="nav-tab px-4 py-3 bg-cyber-panel border border-cyber-border text-cyber-textMuted hover:border-cyber-cyan hover:text-cyber-cyan hover:shadow-glow-cyan chamfer-sm text-left transition-all"
+    >
+      <div class="text-[10px] text-cyber-cyan">// SYSTEMS</div>
+      <div class="font-bold text-sm">01_SYS_CYBER</div>
+    </button>
+
+    <!-- Tab 2: Film & Narrative -->
+    <button 
+      data-filter="film"
+      class="nav-tab px-4 py-3 bg-cyber-panel border border-cyber-border text-cyber-textMuted hover:border-cyber-magenta hover:text-cyber-magenta hover:shadow-glow-magenta chamfer-sm text-left transition-all"
+    >
+      <div class="text-[10px] text-cyber-magenta">// CINEMA</div>
+      <div class="font-bold text-sm">02_FILM_MEDIA</div>
+    </button>
+
+    <!-- Tab 3: Leadership -->
+    <button 
+      data-filter="leadership"
+      class="nav-tab px-4 py-3 bg-cyber-panel border border-cyber-border text-cyber-textMuted hover:border-cyber-yellow hover:text-cyber-yellow hover:shadow-glow-yellow chamfer-sm text-left transition-all"
+    >
+      <div class="text-[10px] text-cyber-yellow">// COMMUNITY</div>
+      <div class="font-bold text-sm">03_LEADERSHIP</div>
+    </button>
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.nav-tab');
+  const label = document.getElementById('active-filter-label');
+  const cards = document.querySelectorAll('.portfolio-card');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const filter = tab.getAttribute('data-filter');
+
+      // Update Tab Styles
+      tabs.forEach(t => {
+        t.classList.remove('active', 'border-cyber-cyan', 'text-cyber-cyan', 'shadow-glow-cyan', 'border-cyber-magenta', 'text-cyber-magenta', 'shadow-glow-magenta', 'border-cyber-yellow', 'text-cyber-yellow', 'shadow-glow-yellow');
+        t.classList.add('border-cyber-border', 'text-cyber-textMuted');
+      });
+
+      tab.classList.remove('border-cyber-border', 'text-cyber-textMuted');
+      tab.classList.add('active');
+
+      if (filter === 'all' || filter === 'tech') {
+        tab.classList.add('border-cyber-cyan', 'text-cyber-cyan', 'shadow-glow-cyan');
+      } else if (filter === 'film') {
+        tab.classList.add('border-cyber-magenta', 'text-cyber-magenta', 'shadow-glow-magenta');
+      } else if (filter === 'leadership') {
+        tab.classList.add('border-cyber-yellow', 'text-cyber-yellow', 'shadow-glow-yellow');
+      }
+
+      if (label) {
+        label.textContent = filter?.toUpperCase() + '_ENTRIES';
+      }
+
+      // Filter Cards
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          (card as HTMLElement).style.display = 'block';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

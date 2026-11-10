@@ -1,0 +1,116 @@
+---
+// index.astro
+import Layout from '../layouts/Layout.astro';
+import TerminalTabs from '../components/TerminalTabs.astro';
+import TechDossierCard from '../components/TechDossierCard.astro';
+import FilmSlateCard from '../components/FilmSlateCard.astro';
+import LeadershipCard from '../components/LeadershipCard.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch all collections
+const allTech = (await getCollection('tech')).sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const allFilm = (await getCollection('film')).sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const allLeadership = (await getCollection('leadership'));
+---
+
+<Layout>
+  <!-- Hero Terminal Section -->
+  <section class="mb-12">
+    <!-- Top Terminal Header Bar -->
+    <div class="bg-cyber-panel border border-cyber-border chamfer-lg p-6 sm:p-8 relative overflow-hidden">
+      <!-- Glow ambient background -->
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyber-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-cyber-magenta/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="font-mono text-xs text-cyber-textMuted tracking-wider mb-3 flex items-center gap-2">
+        <span class="text-cyber-green">&bull; OPERATOR_STATUS: VERIFIED</span>
+        <span>// SEC_LEVEL: 04</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold font-mono tracking-tight text-white mb-4">
+        DOMINIC <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-cyber-pink to-cyber-yellow">HATCHER-THOMASSEN</span>
+      </h1>
+
+      <p class="text-base sm:text-lg text-cyber-textMuted max-w-3xl leading-relaxed mb-6 font-sans">
+        Computer Science & Communication scholar at <strong class="text-cyber-textMain">Seattle Pacific University</strong>. 
+        Specializing in low-level systems engineering, cybersecurity threat simulation, and high-impact cinematic narrative production.
+      </p>
+
+      <!-- Key Skill Tags Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+        <div class="p-3 bg-cyber-carbon border border-cyber-cyan/40 chamfer-sm">
+          <div class="text-cyber-cyan font-bold mb-1">// SYSTEMS & CODE</div>
+          <div class="text-cyber-textMuted">Go, Rust, Python, C++, TypeScript, SQL</div>
+        </div>
+        <div class="p-3 bg-cyber-carbon border border-cyber-magenta/40 chamfer-sm">
+          <div class="text-cyber-magenta font-bold mb-1">// CINEMA & MEDIA</div>
+          <div class="text-cyber-textMuted">Screenwriting, Direction, DaVinci, ADR</div>
+        </div>
+        <div class="p-3 bg-cyber-carbon border border-cyber-yellow/40 chamfer-sm">
+          <div class="text-cyber-yellow font-bold mb-1">// SECURITY & OPS</div>
+          <div class="text-cyber-textMuted">MITRE ATT&CK, SANS PICERL, GoPhish</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Terminal Filter Tabs -->
+  <TerminalTabs />
+
+  <!-- Showcase Grid -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
+    <!-- Tech Projects -->
+    {allTech.map(item => (
+      <TechDossierCard 
+        title={item.data.title}
+        summary={item.data.summary}
+        date={item.data.date}
+        language={item.data.language}
+        role={item.data.role}
+        tags={item.data.tags}
+        mitreTags={item.data.mitreTags}
+        github={item.data.github}
+        demo={item.data.demo}
+        notPubliclyShared={item.data.notPubliclyShared}
+        status={item.data.status}
+        featured={item.data.featured}
+      />
+    ))}
+
+    <!-- Film Projects -->
+    {allFilm.map(item => (
+      <FilmSlateCard 
+        title={item.data.title}
+        logline={item.data.logline}
+        role={item.data.role}
+        runtime={item.data.runtime}
+        format={item.data.format}
+        date={item.data.date}
+        festivalLaurels={item.data.festivalLaurels}
+        trailerUrl={item.data.trailerUrl}
+        screenplayUrl={item.data.screenplayUrl}
+        status={item.data.status}
+        featured={item.data.featured}
+      />
+    ))}
+
+    <!-- Leadership & Community -->
+    {allLeadership.map(item => (
+      <LeadershipCard 
+        organization={item.data.organization}
+        role={item.data.role}
+        period={item.data.period}
+        focusArea={item.data.focusArea}
+        achievements={item.data.achievements}
+        link={item.data.link}
+        featured={item.data.featured}
+      />
+    ))}
+  </section>
+</Layout>
